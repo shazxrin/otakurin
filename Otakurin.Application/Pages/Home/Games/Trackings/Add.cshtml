@@ -1,0 +1,48 @@
+﻿@page "{gameId:guid}"
+@using Otakurin.Domain.Tracking
+@model AddModel
+
+<div class="container my-3">
+    <h1>Add tracking for @Model.Game.Title</h1>
+    <form method="post">
+        <div class="mb-3">
+            <label for="HoursPlayed" class="form-label">Hours Played</label>
+            <input asp-for="@Model.HoursPlayed" name="HoursPlayed" class="form-control" type="number" />
+        </div>
+        
+        <div class="mb-3">
+            <label for="Platform" class="form-label">Platform</label>
+            <select asp-for="@Model.Platform" name="Platform" class="form-select">
+                @foreach (var platform in Model.Game.Platforms.Where(
+                    p => !Model.GameTrackings.Items.Any(gt => gt.Platform.Equals(p))))
+                {
+                    <option value="@platform">@platform</option>
+                }
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="Format" class="form-label">Format</label>
+            <select asp-for="@Model.Format" name="Format" class="form-select" asp-items="Html.GetEnumSelectList<MediaTrackingFormat>()">
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="Status" class="form-label">Status</label>
+            <select asp-for="@Model.Status" name="Status" class="form-select" asp-items="Html.GetEnumSelectList<MediaTrackingStatus>()">
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="Ownership" class="form-label">Ownership</label>
+            <select asp-for="@Model.Ownership" name="Ownership" class="form-select" asp-items="Html.GetEnumSelectList<MediaTrackingOwnership>()">
+            </select>
+        </div>
+
+        <div class="d-flex flex-row justify-content-end">
+            <button type="submit" class="btn btn-primary">
+                Add
+            </button>
+        </div>
+    </form>
+</div>

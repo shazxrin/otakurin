@@ -1,0 +1,89 @@
+﻿@page
+@model IndexModel
+
+<div class="container my-4">
+    <h1 class="mb-3">Trackings</h1>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Title</th>
+                <th scope="col">Platform</th>
+                <th scope="col">Hours Played</th>
+                <th scope="col">Format</th>
+                <th scope="col">Status</th>
+                <th scope="col">Ownership</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            @foreach (var gt in Model.PagedGameTrackings.Items)
+            {
+                <tr>
+                    <td>
+                        <img src="@gt.CoverImageURL" class="img-fluid rounded" style="height: 75px">
+                    </td>
+                    <td>
+                        <a asp-page="/Home/Games/Id" asp-route-gameId="@gt.GameId">
+                            @gt.Title
+                        </a>
+                    </td>
+                    <td>@gt.Platform</td>
+                    <td>@gt.HoursPlayed</td>
+                    <td>@gt.Format</td>
+                    <td>@gt.Status</td>
+                    <td>@gt.Ownership</td>
+                    <td>
+                        <a asp-page="/Home/Games/Trackings/Edit" asp-route-gameId="@gt.GameId" asp-route-platform="@gt.Platform">
+                            <i class="bi bi-pencil-square me-1" style="font-size: 1rem"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="mt-4 d-flex flex-row justify-content-end align-items-center">
+        <p class="text-muted me-4">Viewing item @Model.PagedGameTrackings.CurrentStartIndex to @Model.PagedGameTrackings.CurrentEndIndex out of @Model.PagedGameTrackings.TotalCount items</p>
+
+        <ul class="pagination pagination-sm">
+            @if ((Model.PagedGameTrackings.Page - 1) > 0)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Home/Games/Trackings/Index" asp-route-pageNo="@(Model.PagedGameTrackings.Page - 1)">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+            }
+
+            @for (int i = 1; i <= Model.PagedGameTrackings.TotalPages; i++)
+            {
+                @if (Model.PagedGameTrackings.Page == i)
+                {
+                    <li class="page-item active">
+                        <a class="page-link" asp-page="/Home/Games/Trackings/Index" asp-route-pageNo="@i">@i</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-page="/Home/Games/Trackings/Index" asp-route-pageNo="@i">@i</a>
+                    </li>
+                }
+            }
+            
+            @if ((Model.PagedGameTrackings.Page + 1) <= Model.PagedGameTrackings.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Home/Games/Trackings/Index" asp-route-pageNo="@(Model.PagedGameTrackings.Page + 1)">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

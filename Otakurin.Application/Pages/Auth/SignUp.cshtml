@@ -1,0 +1,49 @@
+﻿@page
+@model SignUpModel
+
+<div class="container my-4">
+    @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+    {
+        <div class="row">
+            <div class="alert alert-danger" role="alert">
+                @error.ErrorMessage
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <h1>Sign up</h1>
+        </div>
+        <div class="col-12 col-lg-6">
+            <form method="post">
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Email</label>
+                    <input name="Email" type="email" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="UserName" class="form-label">Username</label>
+                    <input name="UserName" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="Password" class="form-label">Password</label>
+                    <input name="Password" type="password" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="Key1" class="form-label">Key1</label>
+                    <input name="Key1" type="password" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="Key2" class="form-label">Key2</label>
+                    <input name="Key2" type="password" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="Key3" class="form-label">Key3</label>
+                    <input name="Key3" type="password" class="form-control">
+                </div>
+                <div class="d-flex flex-row justify-content-end">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

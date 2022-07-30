@@ -1,0 +1,48 @@
+﻿@page
+@model SearchModel
+
+<h1 class="mb-4">Search</h1>
+
+<form class="d-flex me-2 mb-3" method="get">
+    <input name="title" class="form-control me-2" placeholder="Title" value="@Model.Title" />
+    <button class="btn btn-outline-secondary" type="submit">Search</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Title))
+{
+    <h3 class="mt-5 mb-3">Results for "@Model.Title"</h3>
+}
+
+@foreach (var item in @Model.SearchGamesItems)
+{
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-12 col-md-3 col-lg-2 ms-3 mt-3 ms-md-0 mt-md-0">
+                <img src="@item.CoverImageURL" class="img-fluid rounded" style="height: 250px">
+            </div>
+            <div class="col-12 col-md-9 col-lg-10">
+                <div class="card-body">
+                    <h3 class="card-title">@item.Title</h3>
+                    
+                    <div class="d-flex flex-row flex-wrap">
+                        @foreach (var platform in item.Platforms)
+                        {
+                            <span class="badge bg-dark me-2 mb-2">@platform</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="d-flex flex-row justify-content-end">
+                <form method="post">
+                    <button class="btn btn-primary" type="submit" asp-page-handler="fetch" asp-route-id="@item.RemoteId">
+                        <i class="bi bi-box-arrow-up-right me-1"></i>
+                        View
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+}
