@@ -1,3 +1,3 @@
 # OTAKURIN
 
-all in one media tracker server
+all in one media tracker
