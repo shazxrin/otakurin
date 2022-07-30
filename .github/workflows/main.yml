@@ -51,5 +51,5 @@ jobs:
         with:
           host: ${{ secrets.CAPROVER_HOST }}
           password: ${{ secrets.CAPROVER_PASS }}
-          app: ${{ secrets.CAPROVER_APP_TRACKING }}
+          app: ${{ secrets.CAPROVER_APP }}
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
