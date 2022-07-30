@@ -32,6 +32,13 @@ namespace Otakurin.Application.Pages.Home.Games
 
         public async Task<IActionResult> OnGetAsync()
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+
+                return Unauthorized();
+            }
+            
             try
             {
                 var gameResult = await _mediator.Send(new GetGameQuery()
@@ -39,13 +46,6 @@ namespace Otakurin.Application.Pages.Home.Games
                     GameId = GameId
                 });
                 Game = gameResult;
-
-                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-                if (userIdClaim == null)
-                {
-
-                    return Unauthorized();
-                }
 
                 var trackingsResult = await _mediator.Send(new GetGameTrackingsQuery()
                 {
