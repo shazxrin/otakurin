@@ -14,7 +14,7 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
         private readonly IMediator _mediator;
 
         [BindProperty(SupportsGet = true)] 
-        public Guid GameId { get; set; }
+        public Guid GameId { get; set; } = Guid.Empty;
 
         public GetGameResult Game { get; private set; }
 
@@ -65,6 +65,12 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
                 });
 
                 GameTracking = gameTrackingResult;
+
+                HoursPlayed = gameTrackingResult.HoursPlayed;
+                Platform = gameTrackingResult.Platform;
+                Status = gameTrackingResult.Status;
+                Format = gameTrackingResult.Format;
+                Ownership = gameTrackingResult.Ownership;
 
                 return Page();
             }
