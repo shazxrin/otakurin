@@ -18,7 +18,6 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
         [BindProperty(SupportsGet = true)] 
         public int PageNo { get; set; } = 1;
         
-        [BindProperty]
         public PagedListResult<GetAllGameTrackingsItemResult> PagedGameTrackings{ get; private set; }
 
         public IndexModel(IMediator mediator)
