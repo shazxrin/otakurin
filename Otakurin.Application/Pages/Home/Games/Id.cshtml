@@ -4,70 +4,82 @@
 <div class="container my-4">
     <!-- Header -->
     <div class="row">
-        <div class="col-12 col-md-3">
-            <img src="@Model.Game.CoverImageURL" class="img-fluid rounded w-100">
+        <div class="col-12 position-relative w-100" style="z-index: -1">
+            <div class="position-absolute top-0 start-0 w-100" style="filter: brightness(0.5)">
+                <img src="@Model.Game.CoverImageURL" class="rounded d-block w-100" alt="..." style="height: 400px; object-fit: cover;">
+            </div>
+        </div>
+        
+        <div class="col-12 col-md-3" style="margin-top: 100px">
+            <img src="@Model.Game.CoverImageURL" class="d-none d-md-block rounded w-100">
+            <img src="@Model.Game.CoverImageURL" class="d-block d-md-none rounded w-50">
 
-            <div class="d-flex flex-column mt-3">
-                <h6 class="text-muted">
-                    <i class="bi bi-binoculars me-1"></i>
-                    Trackings
-                </h6>
+            <div class="card mt-3 mb-3">
+                <div class="card-body">
+                    <div class="card-title text-muted">
+                        <i class="bi bi-binoculars me-1"></i>
+                        Trackings
+                    </div>
 
-                @if (Model.GameTrackings.Items.Count > 0)
-                {
-                    <!-- Button trigger modal -->
-                    <button class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#manageModal">
-                        <i class="bi bi-pencil-square me-1"></i>
-                        Edit
-                    </button>
+                    <div class="d-flex flex-column">
+                        @if (Model.GameTrackings.Items.Count > 0)
+                        {
+                            <!-- Button trigger modal -->
+                            <button class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#manageModal">
+                                <i class="bi bi-pencil-square me-1"></i>
+                                Edit
+                            </button>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="manageModal" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="manageModalLabel">Select platform to edit</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body d-flex flex-column">
-                                    @{
-                                        var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
-                                        var qsPath = ViewContext.HttpContext.Request.QueryString.Value;
-                                        var returnUrl = $"{routeUrl}{qsPath}";
-                                    }
-                                    
-                                    @foreach (var gt in Model.GameTrackings.Items)
-                                    {
-                                        <a class="btn btn-secondary mb-2" 
-                                           asp-page="/Home/Games/Trackings/Edit" 
-                                           asp-route-gameId="@Model.Game.Id" 
-                                           asp-route-platform="@gt.Platform"
-                                           asp-route-returnUrl="@returnUrl">
-                                            @gt.Platform
-                                        </a>
-                                    }
+                            <!-- Modal -->
+                            <div class="modal fade" id="manageModal" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="manageModalLabel">Select platform to edit</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body d-flex flex-column">
+                                            @{
+                                                var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
+                                                var qsPath = ViewContext.HttpContext.Request.QueryString.Value;
+                                                var returnUrl = $"{routeUrl}{qsPath}";
+                                            }
+
+                                            @foreach (var gt in Model.GameTrackings.Items)
+                                            {
+                                                <a class="btn btn-secondary mb-2"
+                                                   asp-page="/Home/Games/Trackings/Edit"
+                                                   asp-route-gameId="@Model.Game.Id"
+                                                   asp-route-platform="@gt.Platform"
+                                                   asp-route-returnUrl="@returnUrl">
+                                                    @gt.Platform
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                }
+                        }
 
-                @if (Model.GameTrackings.Items.Count < Model.Game.Platforms.Count)
-                {
-                    <a class="btn btn-primary mt-2" asp-page="/Home/Games/Trackings/Add" asp-route-gameId="@Model.Game.Id">
-                        <i class="bi bi-plus-circle me-1"></i>
-                        Add
-                    </a>
-                }
+                        @if (Model.GameTrackings.Items.Count < Model.Game.Platforms.Count)
+                        {
+                            <a class="btn btn-primary mt-2" asp-page="/Home/Games/Trackings/Add" asp-route-gameId="@Model.Game.Id">
+                                <i class="bi bi-plus-circle me-1"></i>
+                                Add
+                            </a>
+                        }
+                    </div>
+
+                </div>
             </div>
         </div>
 
-        <div class="col-12 col-md-8 col-lg-9 d-flex flex-column justify-content-end mt-4">
-            <h1>@Model.Game.Title</h1>
+        <div class="col-12 col-md-8 col-lg-9 d-flex flex-column justify-content-end mb-3">
+            <h1 class="mt-4" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@Model.Game.Title</h1>
 
             <h5 class="text-muted mt-1">@string.Join(", ", Model.Game.Companies)</h5>
 
-            <div class="d-flex flex-row flex-wrap mt-3">
+            <div class="d-flex flex-row flex-wrap">
                 @foreach (var platform in @Model.Game.Platforms)
                 {
                     <span class="badge bg-dark me-2">@platform</span>
@@ -75,10 +87,11 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Content -->
-    <div class="row mt-5">
+    <div class="row mt-4">
         <div class="col-12">
+            <h3>Summary</h3>
             <p>@Model.Game.Summary</p>
         </div>
     </div>
