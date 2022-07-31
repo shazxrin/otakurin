@@ -5,16 +5,14 @@ namespace Otakurin.Application.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
+        public IActionResult OnGet()
         {
-            _logger = logger;
-        }
+            if (User.Identity?.IsAuthenticated ?? false)
+            {
+                return LocalRedirect("/Home");
+            }
 
-        public void OnGet()
-        {
-
+            return Page();
         }
     }
 }
