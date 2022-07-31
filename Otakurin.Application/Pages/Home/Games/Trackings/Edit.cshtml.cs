@@ -12,19 +12,22 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
     public class EditModel : PageModel
     {
         private readonly IMediator _mediator;
-
-        [BindProperty(SupportsGet = true)] 
-        public Guid GameId { get; set; } = Guid.Empty;
-
+        
         public GetGameResult Game { get; private set; }
 
         public GetGameTrackingResult GameTracking { get; private set; }
 
-        [BindProperty] 
-        public int HoursPlayed { get; set; } = 0;
-
+        [BindProperty(SupportsGet = true)] 
+        public Guid GameId { get; set; } = Guid.Empty;
+        
         [BindProperty(SupportsGet = true)] 
         public string Platform { get; set; } = string.Empty;
+        
+        [BindProperty(SupportsGet = true)] 
+        public string ReturnUrl { get; set; } = string.Empty;
+
+        [BindProperty] 
+        public int HoursPlayed { get; set; } = 0;
 
         [BindProperty] 
         public MediaTrackingFormat Format { get; set; } = MediaTrackingFormat.Digital;
@@ -99,10 +102,10 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
                 Ownership = Ownership
             });
 
-            return LocalRedirect($"/Home/Games/Id/{GameId}");
+            return LocalRedirect(string.IsNullOrEmpty(ReturnUrl) ? $"/Home/Games/Id/{GameId}" : ReturnUrl);
         }
 
-        public async Task<IActionResult> OnPostRemoveAsync()
+        public async Task<IActionResult> OnPostRemoveAsync(string? returnUrl = null)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
@@ -117,7 +120,7 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
                 Platform = Platform,
             });
 
-            return LocalRedirect($"/Home/Games/Id/{GameId}");
+            return LocalRedirect(string.IsNullOrEmpty(ReturnUrl) ? $"/Home/Games/Id/{GameId}" : ReturnUrl);
         }
     }
 }

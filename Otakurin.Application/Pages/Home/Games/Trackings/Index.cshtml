@@ -72,7 +72,13 @@
                     <td>@gt.Status</td>
                     <td>@gt.Ownership</td>
                     <td>
-                        <a asp-page="/Home/Games/Trackings/Edit" asp-route-gameId="@gt.GameId" asp-route-platform="@gt.Platform">
+                        @{
+                            var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
+                            var qsPath = ViewContext.HttpContext.Request.QueryString.Value;
+                            var returnUrl = $"{routeUrl}{qsPath}";
+                        }
+                        
+                        <a asp-page="/Home/Games/Trackings/Edit" asp-route-gameId="@gt.GameId" asp-route-platform="@gt.Platform" asp-route-returnUrl="@returnUrl">
                             <i class="bi bi-pencil-square me-1" style="font-size: 1rem"></i>
                         </a>
                     </td>

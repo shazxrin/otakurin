@@ -30,9 +30,19 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body d-flex flex-column">
+                                    @{
+                                        var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
+                                        var qsPath = ViewContext.HttpContext.Request.QueryString.Value;
+                                        var returnUrl = $"{routeUrl}{qsPath}";
+                                    }
+                                    
                                     @foreach (var gt in Model.GameTrackings.Items)
                                     {
-                                        <a class="btn btn-secondary mb-2" asp-page="/Home/Games/Trackings/Edit" asp-route-gameId="@Model.Game.Id" asp-route-platform="@gt.Platform">
+                                        <a class="btn btn-secondary mb-2" 
+                                           asp-page="/Home/Games/Trackings/Edit" 
+                                           asp-route-gameId="@Model.Game.Id" 
+                                           asp-route-platform="@gt.Platform"
+                                           asp-route-returnUrl="@returnUrl">
                                             @gt.Platform
                                         </a>
                                     }
