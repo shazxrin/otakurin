@@ -94,6 +94,8 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
                 Ownership = Ownership
             });
 
+            TempData["notifySuccess"] = "Successfully added game to tracking.";
+            
             return LocalRedirect($"/Home/Games/Id/{GameId}");
         }
     }

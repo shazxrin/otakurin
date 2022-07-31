@@ -102,6 +102,8 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
                 Ownership = Ownership
             });
 
+            TempData["notifySuccess"] = "Successfully edited game tracking.";
+
             return LocalRedirect(string.IsNullOrEmpty(ReturnUrl) ? $"/Home/Games/Id/{GameId}" : ReturnUrl);
         }
 
@@ -120,6 +122,8 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
                 Platform = Platform,
             });
 
+            TempData["notifySuccess"] = "Successfully removed game from tracking.";
+            
             return LocalRedirect(string.IsNullOrEmpty(ReturnUrl) ? $"/Home/Games/Id/{GameId}" : ReturnUrl);
         }
     }
