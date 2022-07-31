@@ -90,7 +90,9 @@ public class SignInModel : PageModel
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddDays(30),
-                IssuedUtc = DateTimeOffset.Now
+                IssuedUtc = DateTimeOffset.Now,
+                AllowRefresh = true,
+                IsPersistent = true
             };
 
             await HttpContext.SignInAsync(
