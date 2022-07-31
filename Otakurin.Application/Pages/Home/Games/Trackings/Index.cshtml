@@ -46,7 +46,7 @@
                 <th scope="col"></th>
                 <th scope="col">Title</th>
                 <th scope="col">Platform</th>
-                <th scope="col">Hours Played</th>
+                <th scope="col">Hours</th>
                 <th scope="col">Format</th>
                 <th scope="col">Status</th>
                 <th scope="col">Ownership</th>
@@ -59,9 +59,9 @@
             {
                 <tr>
                     <td>
-                        <img src="@gt.CoverImageURL" class="img-fluid rounded" style="height: 75px">
+                        <img src="@gt.CoverImageURL" class="rounded" style="height: 75px">
                     </td>
-                    <td>
+                    <td style="max-width: 20ch">
                         <a asp-page="/Home/Games/Id" asp-route-gameId="@gt.GameId">
                             @gt.Title
                         </a>
