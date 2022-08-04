@@ -66,7 +66,10 @@
                             @gt.Title
                         </a>
                     </td>
-                    <td>@gt.Platform</td>
+                    <td>
+                        <partial name="Shared/_PlatformIcon" model="@gt.Platform"/>
+                        <span class="ms-2">@gt.Platform</span>
+                    </td>
                     <td>@gt.HoursPlayed</td>
                     <td>@gt.Format</td>
                     <td>@gt.Status</td>

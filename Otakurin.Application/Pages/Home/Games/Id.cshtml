@@ -82,7 +82,10 @@
             <div class="d-flex flex-row flex-wrap">
                 @foreach (var platform in @Model.Game.Platforms)
                 {
-                    <span class="badge bg-dark me-2">@platform</span>
+                    <span class="badge bg-light me-2 mb-2">
+                        <partial name="Shared/_PlatformIcon" model="@platform"/>
+                        <span class="ms-2">@platform</span>
+                    </span>
                 }
             </div>
         </div>

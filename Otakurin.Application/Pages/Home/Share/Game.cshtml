@@ -38,7 +38,10 @@
             <div class="card">
                 <div class="card-body">
                     <h5>Platform</h5>
-                    <p>@Model.GameTracking.Platform</p>
+                    <p class="d-flex flex-row align-items-center">
+                        <partial name="Shared/_PlatformIcon" model="@Model.GameTracking.Platform"/>
+                        <span class="ms-2">@Model.GameTracking.Platform</span>
+                    </p>
 
                     <h5>Hours Played</h5>
                     <p>@Model.GameTracking.HoursPlayed</p>

@@ -1,0 +1,63 @@
+﻿@model string
+
+@{
+    Layout = null;
+}
+
+@if (Model.ToLower().Equals("switch"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/switch.svg" alt="switch"/>
+}
+
+@if (Model.ToLower().Equals("3ds"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/3ds.svg" alt="3ds"/>
+}
+
+@if (Model.ToLower().Equals("wii"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/wii.svg" alt="3ds"/>
+}
+
+@if (
+    Model.ToLower().Equals("ps1") ||
+    Model.ToLower().Equals("ps2") ||
+    Model.ToLower().Equals("psp") ||
+    Model.ToLower().Equals("ps3") ||
+    Model.ToLower().Equals("vita") ||
+    Model.ToLower().Equals("ps4") ||
+    Model.ToLower().Equals("ps5"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/ps.svg" alt="playstation"/>
+}
+
+@if (
+    Model.ToLower().Equals("xbox") ||
+    Model.ToLower().Equals("x360") ||
+    Model.ToLower().Equals("xone") ||
+    Model.ToLower().Equals("series x"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/xbox.svg" alt="xbox"/>
+}
+
+@if (Model.ToLower().Equals("linux"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/linux.svg" alt="linux"/>
+}
+
+@if (Model.ToLower().Equals("pc"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/pc.svg" alt="pc"/>
+}
+
+@if (Model.ToLower().Equals("android"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/android.svg" alt="android"/>
+}
+
+@if (
+    Model.ToLower().Equals("mac") || 
+    Model.ToLower().Equals("ios"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/apple.svg" alt="apple"/>
+}
