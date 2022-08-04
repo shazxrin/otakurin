@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
-using Otakurin.Application.Configurations;
 using Otakurin.Core.Services;
 using Otakurin.Domain.User;
 using Otakurin.Persistence;
@@ -12,8 +11,6 @@ public static class IdentityServiceExtensions
 {
     public static void AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<SecretKeyConfiguration>(configuration.GetSection("SecretKey"));
-
         services
             .AddIdentityCore<UserAccount>()
             .AddEntityFrameworkStores<DatabaseContext>();

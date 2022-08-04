@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
-using Otakurin.Application.Configurations;
 using Otakurin.Core.Exceptions;
 using Otakurin.Core.Users.Account;
 using ValidationException = Otakurin.Core.Exceptions.ValidationException;
@@ -13,7 +12,6 @@ namespace Otakurin.Application.Pages.Auth;
 public class SignUpModel : PageModel
 {
     private readonly IMediator _mediator;
-    private readonly SecretKeyConfiguration _secretKeyConfiguration;
 
     [BindProperty]
     [Required]
@@ -38,22 +36,9 @@ public class SignUpModel : PageModel
     )]
     public string Password { get; set; } = string.Empty;
 
-    [BindProperty]
-    [Required]
-    public string Key1 { get; set; } = string.Empty;
-    
-    [BindProperty]
-    [Required]
-    public string Key2 { get; set; } = string.Empty;
-    
-    [BindProperty]
-    [Required]
-    public string Key3 { get; set; } = string.Empty;
-
-    public SignUpModel(IMediator mediator, IOptions<SecretKeyConfiguration> secretKeyOptions)
+    public SignUpModel(IMediator mediator)
     {
         _mediator = mediator;
-        _secretKeyConfiguration = secretKeyOptions.Value;
     }
     
     public IActionResult OnGet()
@@ -69,14 +54,6 @@ public class SignUpModel : PageModel
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
-        {
-            ModelState.AddModelError(string.Empty, "Check fields!");
-
-            return Page();
-        }
-
-        if (!(Key1.Equals(_secretKeyConfiguration.Key1) && Key2.Equals(_secretKeyConfiguration.Key2) &&
-              Key3.Equals(_secretKeyConfiguration.Key3)))
         {
             ModelState.AddModelError(string.Empty, "Check fields!");
 

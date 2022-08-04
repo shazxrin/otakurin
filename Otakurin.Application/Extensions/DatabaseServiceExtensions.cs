@@ -10,7 +10,7 @@ public static class DatabaseServiceExtensions
         services.AddDbContext<DatabaseContext>(options =>
         {
             var connectionString = config.GetConnectionString("DefaultConnection");
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            options.UseSqlite(connectionString);
         });
     }
 }

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
-using Otakurin.Application.Configurations;
 using Otakurin.Core.Exceptions;
 using Otakurin.Core.Users.Account;
 
@@ -15,7 +14,6 @@ namespace Otakurin.Application.Pages.Auth;
 public class SignInModel : PageModel
 {
     private readonly IMediator _mediator;
-    private readonly SecretKeyConfiguration _secretKeyConfiguration;
 
     [BindProperty]
     [Required]
@@ -25,22 +23,9 @@ public class SignInModel : PageModel
     [Required]
     public string Password { get; set; } = string.Empty;
 
-    [BindProperty]
-    [Required]
-    public string Key1 { get; set; } = string.Empty;
-    
-    [BindProperty]
-    [Required]
-    public string Key2 { get; set; } = string.Empty;
-    
-    [BindProperty]
-    [Required]
-    public string Key3 { get; set; } = string.Empty;
-
-    public SignInModel(IMediator mediator, IOptions<SecretKeyConfiguration> secretKeyOptions)
+    public SignInModel(IMediator mediator)
     {
         _mediator = mediator;
-        _secretKeyConfiguration = secretKeyOptions.Value;
     }
 
     public IActionResult OnGet()
@@ -56,14 +41,6 @@ public class SignInModel : PageModel
     public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
     {
         if (!ModelState.IsValid)
-        {
-            ModelState.AddModelError(string.Empty, "Username or password or keys invalid!");
-
-            return Page();
-        }
-
-        if (!(Key1.Equals(_secretKeyConfiguration.Key1) && Key2.Equals(_secretKeyConfiguration.Key2) &&
-            Key3.Equals(_secretKeyConfiguration.Key3)))
         {
             ModelState.AddModelError(string.Empty, "Username or password or keys invalid!");
 
