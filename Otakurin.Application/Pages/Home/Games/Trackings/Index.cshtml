@@ -66,8 +66,10 @@
                         </a>
                     </td>
                     <td>
-                        <partial name="Shared/_PlatformIcon" model="@gt.Platform"/>
-                        <span class="ms-2">@gt.Platform</span>
+                        <div class="d-flex flex-row align-items-center flex-nowrap">
+                            <partial name="Shared/_PlatformIcon" model="@gt.Platform"/>
+                            <span class="ms-2">@gt.Platform</span>
+                        </div>
                     </td>
                     <td>@gt.HoursPlayed</td>
                     <td>@gt.Format</td>
