@@ -1,0 +1,27 @@
+﻿@using Otakurin.Domain.Tracking
+@model Otakurin.Domain.Tracking.MediaTrackingStatus
+
+@{
+    Layout = null;
+}
+
+@if (Model.Equals(MediaTrackingStatus.InProgress))
+{
+    <i class="bi bi-play me-1"></i>
+}
+@if (Model.Equals(MediaTrackingStatus.Paused))
+{
+    <i class="bi bi-pause me-1"></i>
+}
+@if (Model.Equals(MediaTrackingStatus.Dropped))
+{
+    <i class="bi bi-arrow-bar-down me-1"></i>
+}
+@if (Model.Equals(MediaTrackingStatus.Planning))
+{
+    <i class="bi bi-clock-history me-1"></i>
+}
+@if (Model.Equals(MediaTrackingStatus.Completed))
+{
+    <i class="bi bi-check2-square me-1"></i>
+}

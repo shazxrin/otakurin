@@ -45,26 +45,7 @@
 
                     <h5>Status</h5>
                     <p class="mb-0">
-                        @if (Model.GameTracking.Status.Equals(MediaTrackingStatus.InProgress))
-                        {
-                            <i class="bi bi-play me-1"></i>
-                        }
-                        @if (Model.GameTracking.Status.Equals(MediaTrackingStatus.Paused))
-                        {
-                            <i class="bi bi-pause me-1"></i>
-                        }
-                        @if (Model.GameTracking.Status.Equals(MediaTrackingStatus.Dropped))
-                        {
-                            <i class="bi bi-arrow-bar-down me-1"></i>
-                        }
-                        @if (Model.GameTracking.Status.Equals(MediaTrackingStatus.Planning))
-                        {
-                            <i class="bi bi-clock-history me-1"></i>
-                        }
-                        @if (Model.GameTracking.Status.Equals(MediaTrackingStatus.Completed))
-                        {
-                            <i class="bi bi-check2-square me-1"></i>
-                        }
+                        <partial name="Shared/_MediaTrackingStatusIcon" model="@Model.GameTracking.Status"/>
                         @Model.GameTracking.Status.ToString()
                     </p>
                 </div>
