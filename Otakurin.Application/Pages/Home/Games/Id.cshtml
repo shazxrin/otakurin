@@ -37,6 +37,12 @@
         </div>
 
         <div class="col-12 col-md-3 mt-4 d-flex flex-column justify-content-end">
+            @{
+                var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
+                var qsPath = ViewContext.HttpContext.Request.QueryString.Value;
+                var returnUrl = $"{routeUrl}{qsPath}";
+            }
+            
             <div class="card shadow-none">
                 <div class="card-body">
                     <div class="card-title text-muted">
@@ -48,13 +54,13 @@
                         @if (Model.GameTrackings.Items.Count > 0)
                         {
                             <!-- Button trigger modal -->
-                            <button class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#manageModal">
+                            <button class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#manageTrackingsModal">
                                 <i class="bi bi-pencil-square me-1"></i>
                                 Edit
                             </button>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="manageModal" tabindex="-1">
+                            <div class="modal fade" id="manageTrackingsModal" tabindex="-1">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -62,12 +68,6 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body d-flex flex-column">
-                                            @{
-                                                var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
-                                                var qsPath = ViewContext.HttpContext.Request.QueryString.Value;
-                                                var returnUrl = $"{routeUrl}{qsPath}";
-                                            }
-
                                             @foreach (var gt in Model.GameTrackings.Items)
                                             {
                                                 <a class="btn btn-secondary mb-2"
@@ -87,6 +87,60 @@
                         @if (Model.GameTrackings.Items.Count < Model.Game.Platforms.Count)
                         {
                             <a class="btn btn-primary mt-2" asp-page="/Home/Games/Trackings/Add" asp-route-gameId="@Model.Game.Id">
+                                <i class="bi bi-plus-circle me-1"></i>
+                                Add
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-none mt-2">
+                <div class="card-body">
+                    <div class="card-title text-muted">
+                        <i class="bi bi-star me-1"></i>
+                        Wishlists
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        @if (Model.GameWishlists.Items.Count > 0)
+                        {
+                            <!-- Button trigger modal -->
+                            <button class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#manageWishlistsModal">
+                                <i class="bi bi-pencil-square me-1"></i>
+                                Edit
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="manageWishlistsModal" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="manageModalLabel">Select platform to edit</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body d-flex flex-column">
+
+
+                                            @foreach (var gt in Model.GameWishlists.Items)
+                                            {
+                                                <a class="btn btn-secondary mb-2"
+                                                   asp-page="/Home/Games/Wishlists/Edit"
+                                                   asp-route-gameId="@Model.Game.Id"
+                                                   asp-route-platform="@gt.Platform"
+                                                   asp-route-returnUrl="@returnUrl">
+                                                    @gt.Platform
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.GameWishlists.Items.Count < Model.Game.Platforms.Count)
+                        {
+                            <a class="btn btn-primary mt-2" asp-page="/Home/Games/Wishlists/Add" asp-route-gameId="@Model.Game.Id">
                                 <i class="bi bi-plus-circle me-1"></i>
                                 Add
                             </a>
