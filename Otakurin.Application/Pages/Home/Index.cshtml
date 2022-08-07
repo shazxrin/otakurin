@@ -15,7 +15,10 @@
                             <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 @item.Title
                             </h5>
-                            <span class="badge bg-dark me-2 mb-2">@item.Platform</span>
+                            <span class="badge bg-light me-2 mb-2">
+                                <partial name="Shared/_PlatformIcon" model="@item.Platform"/>
+                                <span class="ms-2">@item.Platform</span>
+                            </span>
                         </div>
                         <div class="card-footer">
                             <div class="d-flex flex-row justify-content-end">
