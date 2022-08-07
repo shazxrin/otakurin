@@ -33,6 +33,8 @@ public class GetGameResult
     
     public string Summary { get; set; }
     
+    public List<string> ScreenshotsUrls { get; set; }
+    
     public List<string> Platforms { get; set; }
     
     public List<string> Companies { get; set; }
@@ -43,6 +45,9 @@ public class GetGameMappings : Profile
     public GetGameMappings()
     {
         CreateMap<Game, GetGameResult>()
+            .ForMember(
+                ggr => ggr.ScreenshotsUrls,
+                options => options.MapFrom(game => game.ScreenshotsUrlsString.Split(';', StringSplitOptions.None)))
             .ForMember(
                 ggr => ggr.Platforms,
                 options => options.MapFrom(game => game.PlatformsString.Split(';', StringSplitOptions.None)))

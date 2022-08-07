@@ -53,7 +53,7 @@ public class IGDBAPIService : IGameService
         // TODO: Complete query.
         var result = await _client.QueryAsync<IGDBLib.Models.Game>(
             IGDBLib.IGDBClient.Endpoints.Games,
-            $"fields name,platforms.*,summary,cover.*,involved_companies.company.*; where id = ({id});"
+            $"fields name,platforms.*,summary,cover.*,involved_companies.company.*,screenshots.url; where id = ({id});"
         );
 
         if (result.Length > 0)
@@ -82,11 +82,37 @@ public class IGDBAPIService : IGameService
                     }
                 }
 
+                var screenshotsUrls = new List<string>();
+                if (game.Screenshots != null)
+                {
+                    foreach (var screenshot in game.Screenshots.Values)
+                    {
+                        if (screenshot == null)
+                        {
+                            continue;
+                        }
+                        
+                        if (string.IsNullOrEmpty(screenshot.Url))
+                        {
+                            continue;
+                        }
+                        
+                        var screenshotUrl = $"https:{screenshot.Url}";
+                        if (screenshotUrl.Length > 0)
+                        {
+                            screenshotUrl = screenshotUrl.Replace("t_thumb", "t_original");
+                        }
+                        
+                        screenshotsUrls.Add(screenshotUrl);
+                    }
+                }
+                
                 return new APIGame(
                     game.Id.Value,
                     coverURL,
                     game.Name,
                     game.Summary,
+                    screenshotsUrls,
                     platforms,
                     companies
                 );

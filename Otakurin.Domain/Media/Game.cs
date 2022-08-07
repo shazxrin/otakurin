@@ -12,6 +12,8 @@ public class Game : Entity
     
     public string Summary { get; set; }
 
+    public string ScreenshotsUrlsString { get; set; }
+    
     public string PlatformsString { get; set; }
     
     public string CompaniesString { get; set; }

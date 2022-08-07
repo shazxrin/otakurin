@@ -29,6 +29,9 @@ public class FetchGameMappings : Profile
                 game => game.RemoteId,
                 options => options.MapFrom(apiGame => apiGame.Id))
             .ForMember(
+                game => game.ScreenshotsUrlsString,
+                options => options.MapFrom(apiGame => string.Join(";", apiGame.ScreenshotsUrls)))
+            .ForMember(
                 game => game.PlatformsString,
                 options => options.MapFrom(apiGame => string.Join(";", apiGame.Platforms)))
             .ForMember(

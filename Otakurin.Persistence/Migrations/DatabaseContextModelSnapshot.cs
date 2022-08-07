@@ -172,6 +172,9 @@ namespace Otakurin.Persistence.Migrations
                     b.Property<long>("RemoteId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("ScreenshotsUrlsString")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Summary")
                         .HasColumnType("TEXT");
 
