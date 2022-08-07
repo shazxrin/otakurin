@@ -9,17 +9,35 @@
                 @{
                     var randomScreenshotIndex = (new Random()).Next(0, Model.Game.ScreenshotsUrls.Count);
                     var coverImageScreenshotSrc = Model.Game.ScreenshotsUrls.ElementAtOrDefault(randomScreenshotIndex);
-                    var coverImageSrc = coverImageScreenshotSrc ?? Model.Game.CoverImageURL; 
+                    var coverImageSrc = coverImageScreenshotSrc ?? Model.Game.CoverImageURL;
                 }
                 <img src="@coverImageSrc" class="rounded d-block w-100" alt="..." style="height: 400px; object-fit: cover;">
             </div>
         </div>
-        
-        <div class="col-12 col-md-3" style="margin-top: 200px">
+
+        <div class="col-12 col-md-3" style="margin-top: 250px">
             <img src="@Model.Game.CoverImageURL" class="d-none d-md-block rounded w-100">
             <img src="@Model.Game.CoverImageURL" class="d-block d-md-none rounded w-50">
+        </div>
 
-            <div class="card mt-3 mb-3">
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-end">
+            <h1 class="mt-4">@Model.Game.Title</h1>
+
+            <h5 class="text-muted mt-1">@string.Join(", ", Model.Game.Companies)</h5>
+
+            <div class="d-flex flex-row flex-wrap">
+                @foreach (var platform in @Model.Game.Platforms)
+                {
+                    <span class="badge bg-light me-2 mb-2">
+                        <partial name="Shared/_PlatformIcon" model="@platform"/>
+                        <span class="ms-2">@platform</span>
+                    </span>
+                }
+            </div>
+        </div>
+
+        <div class="col-12 col-md-3 mt-4 d-flex flex-column justify-content-end">
+            <div class="card shadow-none">
                 <div class="card-body">
                     <div class="card-title text-muted">
                         <i class="bi bi-binoculars me-1"></i>
@@ -74,24 +92,7 @@
                             </a>
                         }
                     </div>
-
                 </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-8 col-lg-9 d-flex flex-column justify-content-end mb-3">
-            <h1 class="mt-4" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@Model.Game.Title</h1>
-
-            <h5 class="text-muted mt-1">@string.Join(", ", Model.Game.Companies)</h5>
-
-            <div class="d-flex flex-row flex-wrap">
-                @foreach (var platform in @Model.Game.Platforms)
-                {
-                    <span class="badge bg-light me-2 mb-2">
-                        <partial name="Shared/_PlatformIcon" model="@platform"/>
-                        <span class="ms-2">@platform</span>
-                    </span>
-                }
             </div>
         </div>
     </div>
