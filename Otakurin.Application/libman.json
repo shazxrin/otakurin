@@ -98,10 +98,10 @@
     },
     {
       "library": "bootswatch@5.2.0",
-      "destination": "wwwroot/lib/bootswatch/",
+      "destination": "wwwroot/lib/bootswatch",
       "files": [
-        "dist/zephyr/_bootswatch.scss",
-        "dist/zephyr/_variables.scss"
+        "dist/lumen/_bootswatch.scss",
+        "dist/lumen/_variables.scss"
       ]
     }
   ]
