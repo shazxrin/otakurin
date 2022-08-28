@@ -14,9 +14,14 @@
     <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/3ds.svg" alt="3ds"/>
 }
 
+@if (Model.ToLower().Equals("nds"))
+{
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/ds.svg" alt="ds"/>
+}
+
 @if (Model.ToLower().Equals("wii"))
 {
-    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/wii.svg" alt="3ds"/>
+    <img style="height: 16px; width: 16px; object-fit: fill" src="/platform/wii.svg" alt="wii"/>
 }
 
 @if (
