@@ -3,4 +3,16 @@
 
 <div class="container my-4">
     <h1>Settings</h1>
+
+    <form method="post">
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input disabled asp-for="@Model.Email" name="Email" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label for="UserName" class="form-label">User Name</label>
+            <input disabled asp-for="@Model.UserName" name="UserName" class="form-control" />
+        </div>
+    </form>
 </div>
