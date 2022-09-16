@@ -35,7 +35,7 @@ namespace Otakurin.Application.Pages.Home.Games.Wishlists
             var pagedGameWishlistsResult = await _mediator.Send(new GetAllGameWishlistsQuery()
             {
                 Page = PageNo,
-                PageSize = 5,
+                PageSize = 10,
                 UserId = Guid.Parse(userIdClaim.Value),
                 SortByRecentlyModified = true,
                 SortByPlatform = false,

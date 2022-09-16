@@ -37,7 +37,7 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
             var pagedGameTrackingsResult = await _mediator.Send(new GetAllGameTrackingsQuery
             {
                 Page = PageNo,
-                PageSize = 5,
+                PageSize = 10,
                 UserId = Guid.Parse(userIdClaim.Value),
                 Status = Enum.Parse<MediaTrackingStatus>(Status),
                 SortByRecentlyModified = true,
