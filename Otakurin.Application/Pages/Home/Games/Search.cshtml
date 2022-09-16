@@ -2,11 +2,11 @@
 @model SearchModel
 
 <div class="container my-4">
-    <h1 class="mb-4">Search</h1>
+    <h1 class="mb-4">Search for Games</h1>
 
     <form class="d-flex me-2 mb-3" method="get">
-        <input name="title" class="form-control me-2" placeholder="Title" value="@Model.Title" />
-        <button class="btn btn-outline-secondary" type="submit">Search</button>
+        <input name="title" class="form-control me-2" placeholder="Game Title" value="@Model.Title" />
+        <button class="btn btn-secondary" type="submit">Search</button>
     </form>
 
     @if (!string.IsNullOrEmpty(Model.Title))
