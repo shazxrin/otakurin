@@ -5,7 +5,7 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap");
+@import url("https://fonts.bunny.net/css?family=dm-sans:400,400i,500,500i,700,700i");
 :root {
   --bs-blue: #158cba;
   --bs-indigo: #6610f2;
@@ -50,10 +50,10 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 34, 34, 34;
   --bs-body-bg-rgb: 255, 255, 255;
-  --bs-font-sans-serif: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --bs-font-sans-serif: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: Work Sans;
+  --bs-body-font-family: DM Sans;
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -5712,7 +5712,7 @@ textarea.form-control-lg {
   display: block;
   padding: var(--bs-tooltip-arrow-height);
   margin: var(--bs-tooltip-margin);
-  font-family: "Work Sans";
+  font-family: "DM Sans";
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5822,7 +5822,7 @@ textarea.form-control-lg {
   z-index: var(--bs-popover-zindex);
   display: block;
   max-width: var(--bs-popover-max-width);
-  font-family: "Work Sans";
+  font-family: "DM Sans";
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
