@@ -1,7 +1,4 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.IdentityModel.Tokens;
-using Otakurin.Core.Services;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Otakurin.Domain.User;
 using Otakurin.Persistence;
 
