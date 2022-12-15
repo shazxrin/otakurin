@@ -10,7 +10,7 @@ namespace Otakurin.Core.Users.Account;
 
 public class GetUserQuery : IRequest<GetUserResult>
 {
-    public Guid UserId { get; set; }
+    public Guid UserId { get; set; } = Guid.Empty;
 
 }
 
@@ -24,13 +24,13 @@ public class GetUserValidator : AbstractValidator<GetUserQuery>
 
 public class GetUserResult
 {
-    public string UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
     
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
     
-    public string ProfilePictureURL { get; set; }
+    public string ProfilePictureURL { get; set; } = string.Empty;
     
-    public string Bio { get; set; }
+    public string Bio { get; set; } = string.Empty;
 }
 
 public class GetUserHandler : IRequestHandler<GetUserQuery, GetUserResult>
@@ -50,7 +50,7 @@ public class GetUserHandler : IRequestHandler<GetUserQuery, GetUserResult>
         var validationResult = await validator.ValidateAsync(query, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
         
         var user = await _databaseContext.Users
@@ -61,8 +61,8 @@ public class GetUserHandler : IRequestHandler<GetUserQuery, GetUserResult>
                 p => p.UserId,
                 (u, p) => new GetUserResult
                 {
-                    UserName = u.UserName, 
-                    Email = u.Email, 
+                    UserName = u.UserName ?? string.Empty, 
+                    Email = u.Email ?? string.Empty, 
                     ProfilePictureURL = p.ProfilePictureURL, 
                     Bio = p.Bio
                 }

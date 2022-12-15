@@ -15,8 +15,9 @@ namespace Otakurin.Application.Pages.Home.Games.Wishlists
         
         [BindProperty(SupportsGet = true)] 
         public int PageNo { get; set; } = 1;
-        
-        public PagedListResult<GetAllGameWishlistsItemResult> PagedGameWishlists { get; private set; }
+
+        public PagedListResult<GetAllGameWishlistsItemResult> PagedGameWishlists { get; private set; } 
+            = new(new (), 0, 1, 1);
 
         public IndexModel(IMediator mediator)
         {

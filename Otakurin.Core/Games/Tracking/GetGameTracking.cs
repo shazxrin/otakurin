@@ -67,7 +67,7 @@ public class GetGameTrackingHandler : IRequestHandler<GetGameTrackingQuery, GetG
         var validationResult = await validator.ValidateAsync(query, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
 
         var tracking = await _databaseContext.GameTrackings

@@ -55,28 +55,31 @@ public class SignInModel : PageModel
                 Password = Password
             });
 
-            var claims = new List<Claim>
+            if (result.User.UserName != null && result.User.Email != null)
             {
-                new(ClaimTypes.NameIdentifier, result.User.Id.ToString()),
-                new(ClaimTypes.Name, result.User.UserName),
-                new(ClaimTypes.Email, result.User.Email)
-            };
+                var claims = new List<Claim>
+                {
+                    new(ClaimTypes.NameIdentifier, result.User.Id.ToString()),
+                    new(ClaimTypes.Name, result.User.UserName),
+                    new(ClaimTypes.Email, result.User.Email)
+                };
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(30),
-                IssuedUtc = DateTimeOffset.Now,
-                AllowRefresh = true,
-                IsPersistent = true
-            };
+                var authProperties = new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddDays(30),
+                    IssuedUtc = DateTimeOffset.Now,
+                    AllowRefresh = true,
+                    IsPersistent = true
+                };
 
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme, 
-                new ClaimsPrincipal(claimsIdentity), 
-                authProperties
-            );
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme, 
+                    new ClaimsPrincipal(claimsIdentity), 
+                    authProperties
+                );
+            }
 
             return LocalRedirect(Url.Content(returnUrl) ?? "/Home");
         }

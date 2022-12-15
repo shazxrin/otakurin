@@ -10,11 +10,11 @@ namespace Otakurin.Core.Games.Wishlist;
 
 public class RemoveGameWishlistCommand : IRequest<Unit>
 {
-    public Guid UserId { get; set; }
+    public Guid UserId { get; set; } = Guid.Empty;
+
+    public Guid GameId { get; set; } = Guid.Empty;
     
-    public Guid GameId { get; set; }
-    
-    public string Platform { get; set; }
+    public string Platform { get; set; } = string.Empty; 
 }
 
 public class RemoveGameWishlistValidator : AbstractValidator<RemoveGameWishlistCommand>
@@ -41,7 +41,7 @@ public class RemoveGameWishlistHandler : IRequestHandler<RemoveGameWishlistComma
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }        
         
         GameWishlist? gameWishlist = await _databaseContext.GameWishlists

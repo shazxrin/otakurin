@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Otakurin.Domain.Wishlist;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -31,13 +29,12 @@ public class GetGameWishlistValidator : AbstractValidator<GetGameWishlistQuery>
 
 public class GetGameWishlistResult
 {
-    public string Platform { get; set; }
+    public string Platform { get; set; } = string.Empty;
 };
 
 public class GetGameWishlistHandler : IRequestHandler<GetGameWishlistQuery, GetGameWishlistResult>
 {
     private readonly DatabaseContext _databaseContext;
-    private readonly IMapper _mapper;
 
     public GetGameWishlistHandler(DatabaseContext databaseContext)
     {

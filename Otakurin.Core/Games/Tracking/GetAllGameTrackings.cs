@@ -10,7 +10,7 @@ namespace Otakurin.Core.Games.Tracking;
 
 public class GetAllGameTrackingsQuery : PagedListRequest, IRequest<PagedListResult<GetAllGameTrackingsItemResult>>
 {
-    public Guid UserId { get; set; }
+    public Guid UserId { get; set; } = Guid.Empty;
     
     public MediaTrackingStatus? Status { get; set; } = null;
 
@@ -35,21 +35,21 @@ public class GetAllGameTrackingsValidator : AbstractValidator<GetAllGameTracking
 
 public class GetAllGameTrackingsItemResult
 {
-    public Guid GameId { get; set; }
-    
-    public string Title { get; set; }
-    
-    public string CoverImageURL { get; set; }
-    
-    public float HoursPlayed { get; set; }
-    
-    public string Platform { get; set; }
-    
-    public MediaTrackingFormat Format { get; set; }
-    
-    public MediaTrackingStatus Status { get; set; }
-    
-    public MediaTrackingOwnership Ownership { get; set; }
+    public Guid GameId { get; set; } = Guid.Empty;
+
+    public string Title { get; set; } = string.Empty;
+
+    public string CoverImageURL { get; set; } = string.Empty;
+
+    public float HoursPlayed { get; set; } = 0f;
+
+    public string Platform { get; set; } = string.Empty;
+
+    public MediaTrackingFormat Format { get; set; } = MediaTrackingFormat.Digital;
+
+    public MediaTrackingStatus Status { get; set; } = MediaTrackingStatus.InProgress;
+
+    public MediaTrackingOwnership Ownership { get; set; } = MediaTrackingOwnership.Owned;
 }
 
 public class GetAllGameTrackingsHandler : IRequestHandler<GetAllGameTrackingsQuery, PagedListResult<GetAllGameTrackingsItemResult>>
@@ -67,7 +67,7 @@ public class GetAllGameTrackingsHandler : IRequestHandler<GetAllGameTrackingsQue
         var validationResult = await validator.ValidateAsync(query, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
         
         var queryable = _databaseContext.GameTrackings

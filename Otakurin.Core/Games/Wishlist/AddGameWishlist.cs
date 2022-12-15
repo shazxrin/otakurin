@@ -52,7 +52,7 @@ public class AddGameWishlistHandler : IRequestHandler<AddGameWishlistCommand, Un
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
         
         // Verify user.

@@ -10,7 +10,7 @@ namespace Otakurin.Core.Games.Content;
 
 public class FetchGameCommand : IRequest<FetchGameResult>
 {
-    public long GameRemoteId { get; set; }
+    public long GameRemoteId { get; set; } = 0L;
 }
 
 public class FetchGameResult

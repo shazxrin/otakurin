@@ -14,11 +14,11 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
         private readonly IMediator _mediator;
 
         [BindProperty(SupportsGet = true)]
-        public Guid GameId { get; set; }
+        public Guid GameId { get; set; } = Guid.Empty;
 
-        public GetGameResult Game { get; private set; }
+        public GetGameResult Game { get; private set; } = new();
 
-        public GetGameTrackingsResult GameTrackings { get; private set; }
+        public GetGameTrackingsResult GameTrackings { get; private set; } = new();
 
         [BindProperty]
         public int HoursPlayed { get; set; } = 0;

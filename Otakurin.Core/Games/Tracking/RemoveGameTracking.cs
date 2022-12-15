@@ -11,11 +11,11 @@ namespace Otakurin.Core.Games.Tracking;
 
 public class RemoveGameTrackingCommand : IRequest<Unit>
 {
-    public Guid UserId { get; set; }
+    public Guid UserId { get; set; } = Guid.Empty;
     
-    public Guid GameId { get; set; }
+    public Guid GameId { get; set; } = Guid.Empty;
     
-    public string Platform { get; set; }
+    public string Platform { get; set; } = string.Empty;
 }
 
 public class RemoveGameTrackingValidator : AbstractValidator<RemoveGameTrackingCommand>
@@ -42,7 +42,7 @@ public class RemoveGameTrackingHandler : IRequestHandler<RemoveGameTrackingComma
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
         
         GameTracking? gameTracking = await _databaseContext.GameTrackings

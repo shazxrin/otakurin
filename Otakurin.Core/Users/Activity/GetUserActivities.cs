@@ -5,12 +5,13 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Otakurin.Core.Exceptions;
 using Otakurin.Persistence;
+using ValidationException = Otakurin.Core.Exceptions.ValidationException;
 
 namespace Otakurin.Core.Users.Activity;
 
 public class GetUserActivitiesQuery : IRequest<GetUserActivitiesResult>
 {
-    public Guid UserId { get; set; }
+    public Guid UserId { get; set; } = Guid.Empty;
 }
 
 public class GetUserActivitiesValidator : AbstractValidator<GetUserActivitiesQuery>
@@ -25,30 +26,30 @@ public class GetUserActivitiesResult
 {
     public class GetUserActivitiesItemResult
     {
-        public Guid ActivityId { get; set; }
+        public Guid ActivityId { get; set; } = Guid.Empty;
         
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
         
-        public string ProfilePictureURL { get; set; }
+        public string ProfilePictureURL { get; set; } = string.Empty;
         
-        public Guid MediaId { get; set; }
+        public Guid MediaId { get; set; } = Guid.Empty;
         
-        public string MediaTitle { get; set; }
+        public string MediaTitle { get; set; } = string.Empty;
         
-        public string MediaCoverImageURL { get; set; }
+        public string MediaCoverImageURL { get; set; } = string.Empty;
+
+        public ActivityMediaType MediaType { get; set; } = ActivityMediaType.Game;
+
+        public MediaTrackingStatus? Status { get; set; } = MediaTrackingStatus.InProgress;
+
+        public int NoOf { get; set; } = 0;
+
+        public ActivityAction Action { get; set; } = ActivityAction.AddTracking;
         
-        public ActivityMediaType MediaType { get; set; }
-        
-        public MediaTrackingStatus? Status { get; set; }
-        
-        public int NoOf { get; set; }
-        
-        public ActivityAction Action { get; set; }
-        
-        public DateTime DateTime { get; set; }
+        public DateTime DateTime { get; set; } = DateTime.Now;
     }
 
-    public List<GetUserActivitiesItemResult> Items { get; set; }
+    public List<GetUserActivitiesItemResult> Items { get; set; } = new();
 }
 
 public class GetUserActivitiesHandler : IRequestHandler<GetUserActivitiesQuery, GetUserActivitiesResult>
@@ -62,6 +63,13 @@ public class GetUserActivitiesHandler : IRequestHandler<GetUserActivitiesQuery, 
     
     public async Task<GetUserActivitiesResult> Handle(GetUserActivitiesQuery query, CancellationToken cancellationToken)
     {
+        var validator = new GetUserActivitiesValidator();
+        var validationResult = await validator.ValidateAsync(query, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult.Errors);
+        }
+        
         var user = await _databaseContext.Users
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Id.Equals(query.UserId), cancellationToken);
@@ -86,7 +94,7 @@ public class GetUserActivitiesHandler : IRequestHandler<GetUserActivitiesQuery, 
             .Select(activity => new GetUserActivitiesResult.GetUserActivitiesItemResult
             {
                 ActivityId = activity.Id,
-                UserName = user.UserName,
+                UserName = user.UserName ?? string.Empty,
                 ProfilePictureURL = userProfile.ProfilePictureURL,
                 MediaId = activity.MediaId,
                 MediaTitle = activity.MediaTitle,

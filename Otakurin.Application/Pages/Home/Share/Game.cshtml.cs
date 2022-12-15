@@ -14,16 +14,16 @@ public class GameModel : PageModel
     private readonly IMediator _mediator;
     
     [BindProperty(SupportsGet = true)]
-    public Guid GameId { get; set; }
-    
-    [BindProperty(SupportsGet = true)]
-    public string Platform { get; set; }
-    
-    [BindProperty]
-    public GetGameResult Game { get; private set; }
-    
-    [BindProperty]
-    public GetGameTrackingResult GameTracking { get; private set; }
+    public Guid GameId { get; set; } = Guid.Empty;
+
+    [BindProperty(SupportsGet = true)] 
+    public string Platform { get; set; } = string.Empty;
+
+    [BindProperty] 
+    public GetGameResult Game { get; private set; } = new();
+
+    [BindProperty] 
+    public GetGameTrackingResult GameTracking { get; private set; } = new();
 
     public GameModel(IMediator mediator)
     {

@@ -11,9 +11,9 @@ namespace Otakurin.Core.Games.Tracking;
 
 public class GetGameTrackingsQuery : IRequest<GetGameTrackingsResult>
 {
-    public Guid UserId { get; set; }
-    
-    public Guid GameId { get; set; }
+    public Guid UserId { get; set; } = Guid.Empty;
+
+    public Guid GameId { get; set; } = Guid.Empty;
 }
 
 public class GetGameTrackingsValidator : AbstractValidator<GetGameTrackingsQuery>
@@ -28,18 +28,18 @@ public class GetGameTrackingsResult
 {
     public class GetGameTrackingsItemResult
     {
-        public int HoursPlayed { get; set; }
-        
-        public string Platform { get; set; }
-        
-        public MediaTrackingFormat Format { get; set; }
-        
-        public MediaTrackingStatus Status { get; set; }
-        
-        public MediaTrackingOwnership Ownership { get; set; }
+        public int HoursPlayed { get; set; } = 0;
+
+        public string Platform { get; set; } = string.Empty;
+
+        public MediaTrackingFormat Format { get; set; } = MediaTrackingFormat.Digital;
+
+        public MediaTrackingStatus Status { get; set; } = MediaTrackingStatus.InProgress;
+
+        public MediaTrackingOwnership Ownership { get; set; } = MediaTrackingOwnership.Owned;
     }
 
-    public List<GetGameTrackingsResult.GetGameTrackingsItemResult> Items { get; set; }
+    public List<GetGameTrackingsItemResult> Items { get; set; } = new();
 }
 
 public class GetGameTrackingsMappings : Profile
@@ -67,7 +67,7 @@ public class GetGameTrackingsHandler : IRequestHandler<GetGameTrackingsQuery, Ge
         var validationResult = await validator.ValidateAsync(query, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
 
         var gameTrackings = await _databaseContext.GameTrackings

@@ -12,20 +12,19 @@ namespace Otakurin.Core.Games.Tracking;
 
 public class UpdateGameTrackingCommand : IRequest<Unit>
 {
-    public Guid UserId { get; set; }
-    
-    
-    public Guid GameId { get; set; }
-    
-    public string Platform { get; set; }
-    
-    public float HoursPlayed { get; set; }
-    
-    public MediaTrackingFormat Format { get; set; }
-    
-    public MediaTrackingStatus Status { get; set; }
+    public Guid UserId { get; set; } = Guid.Empty;
 
-    public MediaTrackingOwnership Ownership { get; set; }
+    public Guid GameId { get; set; } = Guid.Empty;
+
+    public string Platform { get; set; } = string.Empty;
+
+    public float HoursPlayed { get; set; } = 0f;
+
+    public MediaTrackingFormat Format { get; set; } = MediaTrackingFormat.Digital;
+
+    public MediaTrackingStatus Status { get; set; } = MediaTrackingStatus.InProgress;
+
+    public MediaTrackingOwnership Ownership { get; set; } = MediaTrackingOwnership.Owned;
 }
 
 public class UpdateGameTrackingValidator : AbstractValidator<UpdateGameTrackingCommand>
@@ -63,7 +62,7 @@ public class UpdateGameTrackingHandler : IRequestHandler<UpdateGameTrackingComma
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
         
         GameTracking? gameTracking = await _databaseContext.GameTrackings

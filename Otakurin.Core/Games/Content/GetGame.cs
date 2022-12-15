@@ -6,13 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Otakurin.Core.Exceptions;
 using Otakurin.Persistence;
 using Otakurin.Service.Game;
-using ValidationException = Otakurin.Core.Exceptions.ValidationException;
 
 namespace Otakurin.Core.Games.Content;
 
 public class GetGameQuery : IRequest<GetGameResult>
 {
-    public Guid GameId { get; set; }
+    public Guid GameId { get; set; } = Guid.Empty;
 }
 
 public class GetGameValidator : AbstractValidator<GetGameQuery>
@@ -25,19 +24,19 @@ public class GetGameValidator : AbstractValidator<GetGameQuery>
 
 public class GetGameResult
 {
-    public Guid Id { get; set; }
-    
-    public string CoverImageURL { get; set; }
-    
-    public string Title { get; set; }
-    
-    public string Summary { get; set; }
-    
-    public List<string> ScreenshotsUrls { get; set; }
-    
-    public List<string> Platforms { get; set; }
-    
-    public List<string> Companies { get; set; }
+    public Guid Id { get; set; } = Guid.Empty;
+
+    public string CoverImageURL { get; set; } = string.Empty;
+
+    public string Title { get; set; } = string.Empty;
+
+    public string Summary { get; set; } = string.Empty;
+
+    public List<string> ScreenshotsUrls { get; set; } = new();
+
+    public List<string> Platforms { get; set; } = new();
+
+    public List<string> Companies { get; set; } = new();
 }
 
 public class GetGameMappings : Profile
@@ -78,7 +77,7 @@ public class GetGameHandler : IRequestHandler<GetGameQuery, GetGameResult>
         {
             throw new Exceptions.ValidationException(validationResult.Errors);
         }
-        
+
         // Find game from database.
         var dbGame = await _databaseContext.Games
             .Where(game => game.Id.Equals(query.GameId))
@@ -88,7 +87,7 @@ public class GetGameHandler : IRequestHandler<GetGameQuery, GetGameResult>
         {
             throw new NotFoundException("Game not found");
         }
-        
+
         // Fetch game from remote if cache is stale.
         var timeSpan = DateTime.Now - dbGame.LastModifiedOn;
         if (timeSpan?.TotalHours > 12)
@@ -103,7 +102,7 @@ public class GetGameHandler : IRequestHandler<GetGameQuery, GetGameResult>
                 return _mapper.Map<Game, GetGameResult>(dbGame);
             }
         }
-        
+
         return _mapper.Map<Game, GetGameResult>(dbGame);
     }
 }

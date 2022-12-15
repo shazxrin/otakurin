@@ -9,7 +9,7 @@ namespace Otakurin.Core.Games.Wishlist;
 
 public class GetAllGameWishlistsQuery : PagedListRequest, IRequest<PagedListResult<GetAllGameWishlistsItemResult>>
 {
-    public Guid UserId { get; set; }
+    public Guid UserId { get; set; } = Guid.Empty;
     
     public bool SortByRecentlyModified { get; set; } = false;
 
@@ -26,13 +26,13 @@ public class GetAllGameWishlistsValidator : AbstractValidator<GetAllGameWishlist
 
 public class GetAllGameWishlistsItemResult
 {
-    public Guid GameId { get; set; }
+    public Guid GameId { get; set; } = Guid.Empty;
     
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
     
-    public string CoverImageURL { get; set; }
+    public string CoverImageURL { get; set; } = string.Empty;
     
-    public string Platform { get; set; }
+    public string Platform { get; set; } = string.Empty;
 }
 
 public class GetAllGameWishlistsHandler : IRequestHandler<GetAllGameWishlistsQuery, PagedListResult<GetAllGameWishlistsItemResult>>
@@ -51,7 +51,7 @@ public class GetAllGameWishlistsHandler : IRequestHandler<GetAllGameWishlistsQue
         var validationResult = await validator.ValidateAsync(query, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
         
         var queryable = _databaseContext.GameWishlists

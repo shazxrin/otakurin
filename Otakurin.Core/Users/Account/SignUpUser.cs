@@ -12,11 +12,11 @@ namespace Otakurin.Core.Users.Account;
 
 public class SignUpUserCommand : IRequest<Unit>
 {
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
     
-    public string UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
     
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 }
 
 public class SignUpUserValidator : AbstractValidator<SignUpUserCommand>
@@ -54,14 +54,14 @@ public class SignUpUserHandler : IRequestHandler<SignUpUserCommand, Unit>
         }
         
         var isUserNameTaken = await _databaseContext.Users
-            .AnyAsync(u => u.UserName.Equals(command.UserName), cancellationToken);
+            .AnyAsync(u => u.UserName != null && u.UserName.Equals(command.UserName), cancellationToken);
         if (isUserNameTaken)
         {
             throw new ExistsException("User name already exists!");
         }
         
         var isEmailTaken = await _databaseContext.Users
-            .AnyAsync(u => u.Email.Equals(command.Email), cancellationToken);
+            .AnyAsync(u => u.Email != null && u.Email.Equals(command.Email), cancellationToken);
         if (isEmailTaken)
         {
             throw new ExistsException("Email already exists!");

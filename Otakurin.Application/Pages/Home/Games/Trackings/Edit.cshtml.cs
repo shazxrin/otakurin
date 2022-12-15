@@ -12,10 +12,10 @@ namespace Otakurin.Application.Pages.Home.Games.Trackings
     public class EditModel : PageModel
     {
         private readonly IMediator _mediator;
-        
-        public GetGameResult Game { get; private set; }
 
-        public GetGameTrackingResult GameTracking { get; private set; }
+        public GetGameResult Game { get; private set; } = new();
+
+        public GetGameTrackingResult GameTracking { get; private set; } = new();
 
         [BindProperty(SupportsGet = true)] 
         public Guid GameId { get; set; } = Guid.Empty;

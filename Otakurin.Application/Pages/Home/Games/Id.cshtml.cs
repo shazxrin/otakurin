@@ -14,16 +14,16 @@ namespace Otakurin.Application.Pages.Home.Games
         private readonly IMediator _mediator;
 
         [BindProperty(SupportsGet = true)]
-        public Guid GameId { get; set; }
+        public Guid GameId { get; set; } = Guid.Empty;
 
-        [BindProperty]
-        public GetGameResult Game { get; private set; }
+        [BindProperty] 
+        public GetGameResult Game { get; private set; } = new();
 
-        [BindProperty]
-        public GetGameTrackingsResult GameTrackings { get; private set; }
+        [BindProperty] 
+        public GetGameTrackingsResult GameTrackings { get; private set; } = new();
 
-        [BindProperty]
-        public GetGameWishlistsResult GameWishlists { get; private set; }
+        [BindProperty] 
+        public GetGameWishlistsResult GameWishlists { get; private set; } = new();
 
         public IdModel(IMediator mediator)
         {

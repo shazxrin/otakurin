@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Otakurin.Domain;
 using Otakurin.Domain.Media;
-using Otakurin.Domain.Pricing;
 using Otakurin.Domain.Tracking;
 using Otakurin.Domain.User;
 using Otakurin.Domain.Wishlist;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Otakurin.Persistence;
@@ -19,20 +17,10 @@ public class DatabaseContext : IdentityDbContext<UserAccount, UserRole, Guid>
     public virtual DbSet<UserActivity> Activities { get; set; }
     
     public virtual DbSet<Game> Games { get; set; }
-    
-    public virtual DbSet<Book> Books { get; set; }
 
     public virtual DbSet<GameTracking> GameTrackings { get; set; }
     
     public virtual DbSet<GameWishlist> GameWishlists { get; set; }
-    
-    public virtual DbSet<BookTracking> BookTrackings { get; set; }
-    
-    public virtual DbSet<BookWishlist> BookWishlists { get; set; }
-
-    public virtual DbSet<Show> Shows { get; set; }
-    
-    public virtual DbSet<ShowTracking> ShowTrackings { get; set; }
 
     public DatabaseContext() { }
     

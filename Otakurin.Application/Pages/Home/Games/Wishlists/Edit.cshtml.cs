@@ -13,10 +13,10 @@ namespace Otakurin.Application.Pages.Home.Games.Wishlists
     public class EditModel : PageModel
     {
         private readonly IMediator _mediator;
-        
-        public GetGameResult Game { get; private set; }
 
-        public GetGameWishlistResult GameWishlistResult { get; private set; }
+        public GetGameResult Game { get; private set; } = new();
+
+        public GetGameWishlistResult GameWishlistResult { get; private set; } = new();
 
         [BindProperty(SupportsGet = true)] 
         public Guid GameId { get; set; } = Guid.Empty;

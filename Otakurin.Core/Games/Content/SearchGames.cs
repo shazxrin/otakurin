@@ -2,13 +2,12 @@
 using FluentValidation;
 using MediatR;
 using Otakurin.Service.Game;
-using ValidationException = Otakurin.Core.Exceptions.ValidationException;
 
 namespace Otakurin.Core.Games.Content;
 
 public class SearchGamesQuery : IRequest<SearchGamesResult>
 {
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 }
 
 public class SearchGamesValidator : AbstractValidator<SearchGamesQuery>
@@ -23,16 +22,16 @@ public class SearchGamesResult
 {
     public class SearchGamesItemResult
     {
-        public long RemoteId { get; set; }
-        
-        public string Title { get; set; }
-        
-        public string CoverImageURL { get; set; }
-        
-        public List<string> Platforms { get; set; }
+        public long RemoteId { get; set; } = 0L;
+
+        public string Title { get; set; } = string.Empty;
+
+        public string CoverImageURL { get; set; } = string.Empty;
+
+        public List<string> Platforms { get; set; } = new();
     }
 
-    public List<SearchGamesItemResult> Items { get; set; }
+    public List<SearchGamesItemResult> Items { get; set; } = new();
 }
 
 public class SearchGamesMappings : Profile
@@ -63,7 +62,7 @@ public class SearchGamesHandler : IRequestHandler<SearchGamesQuery, SearchGamesR
         var validationResult = await validator.ValidateAsync(query, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new Exceptions.ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
         
         var games = await _gameService.SearchGameByTitle(query.Title);

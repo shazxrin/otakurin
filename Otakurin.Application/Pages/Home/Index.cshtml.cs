@@ -11,7 +11,9 @@ namespace Otakurin.Application.Pages.Home
     public class IndexModel : PageModel
     {
         private readonly IMediator _mediator;
+
         public PagedListResult<GetAllGameTrackingsItemResult> RecentPagedGameTrackings { get; private set; }
+            = new (new List<GetAllGameTrackingsItemResult>(), 0, 1, 1);
 
         public IndexModel(IMediator mediator)
         {

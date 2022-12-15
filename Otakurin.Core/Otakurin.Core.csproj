@@ -16,11 +16,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Otakurin.Domain\Otakurin.Domain.csproj" />
       <ProjectReference Include="..\Otakurin.Persistence\Otakurin.Persistence.csproj" />
-      <ProjectReference Include="..\Otakurin.Service.Book\Otakurin.Service.Book.csproj" />
       <ProjectReference Include="..\Otakurin.Service.Game\Otakurin.Service.Game.csproj" />
-      <ProjectReference Include="..\Otakurin.Service.Show\Otakurin.Service.Show.csproj" />
-      <ProjectReference Include="..\Otakurin.Service.Store.Game.Switch\Otakurin.Service.Store.Game.Switch.csproj" />
-      <ProjectReference Include="..\Otakurin.Service.Store.Game\Otakurin.Service.Store.Game.csproj" />
     </ItemGroup>
 
 </Project>

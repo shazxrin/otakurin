@@ -15,11 +15,11 @@ namespace Otakurin.Application.Pages.Home.Games.Wishlists
         private readonly IMediator _mediator;
 
         [BindProperty(SupportsGet = true)]
-        public Guid GameId { get; set; }
+        public Guid GameId { get; set; } = Guid.Empty;
 
-        public GetGameResult Game { get; private set; }
+        public GetGameResult Game { get; private set; } = new();
 
-        public GetGameWishlistsResult GameWishlists { get; private set; }
+        public GetGameWishlistsResult GameWishlists { get; private set; } = new();
 
         [BindProperty]
         public string Platform { get; set; } = string.Empty;
