@@ -1,39 +1,83 @@
 ﻿@page
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Formatters
+@using Otakurin.Domain.User
 @model IndexModel
 
 <div class="container my-4">
     <h1 class="mb-3">Home</h1>
     
     <h3 class="mb-3">Recent games</h3>
-        <div class="row flex-nowrap" style="overflow-x: auto">
-            @foreach (var item in Model.RecentPagedGameTrackings.Items)
-            {
-                <div class="col-8 col-md-6 col-lg-4 col-xl-3">
-                    <div class="card mb-3">
-                        <img src="@item.CoverImageURL" class="card-image-top img-fluid rounded" style="height: 250px; object-fit: cover">
-                        <div class="card-body">
-                            <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                @item.Title
-                            </h5>
-                            <span class="badge bg-light me-2 mb-2">
-                                <partial name="Shared/_PlatformIcon" model="@item.Platform"/>
-                                <span class="ms-2">@item.Platform</span>
-                            </span>
-                        </div>
-                        <div class="card-footer">
-                            <div class="d-flex flex-row justify-content-end">
-                                <a class="btn btn-primary me-2" asp-page="/Home/Games/Id" asp-route-gameId="@item.GameId">
-                                    <i class="bi bi-box-arrow-up-right me-1"></i>
-                                    View
-                                </a>
-                                <a class="btn btn-primary" asp-page="/Home/Games/Trackings/Edit" asp-route-gameId="@item.GameId" asp-route-platform="@item.Platform">
-                                    <i class="bi bi-pencil-square me-1"></i>
-                                    Edit
-                                </a>
-                            </div>
+    <div class="row flex-nowrap" style="overflow-x: auto">
+        @foreach (var item in Model.RecentPagedGameTrackings.Items)
+        {
+            <div class="col-8 col-md-6 col-lg-4 col-xl-3">
+                <div class="card mb-3">
+                    <img src="@item.CoverImageURL" class="card-image-top img-fluid rounded" style="height: 250px; object-fit: cover">
+                    <div class="card-body">
+                        <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            @item.Title
+                        </h5>
+                        <span class="badge bg-light me-2 mb-2">
+                            <partial name="Shared/_PlatformIcon" model="@item.Platform"/>
+                            <span class="ms-2">@item.Platform</span>
+                        </span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex flex-row justify-content-end">
+                            <a class="btn btn-primary me-2" asp-page="/Home/Games/Id" asp-route-gameId="@item.GameId">
+                                <i class="bi bi-box-arrow-up-right me-1"></i>
+                                View
+                            </a>
+                            <a class="btn btn-primary" asp-page="/Home/Games/Trackings/Edit" asp-route-gameId="@item.GameId" asp-route-platform="@item.Platform">
+                                <i class="bi bi-pencil-square me-1"></i>
+                                Edit
+                            </a>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+        }
+    </div>
+    
+    <h3 class="mb-3 mt-5">Recent activity</h3>
+                
+    @foreach (var item in Model.UserActivities.Items)
+    {
+        <div class="card mb-3">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="@item.MediaCoverImageURL" class="img-fluid rounded-start" style="height: 300px; width: 200px">
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            @if (item.Action == ActivityAction.AddTracking) { <span>Added tracking for </span> }
+                            @if (item.Action == ActivityAction.UpdateTracking) { <span>Updated tracking for </span> }
+                            @if (item.Action == ActivityAction.RemoveTracking) { <span>Removed tracking for </span> }
+                            @if (item.Action == ActivityAction.AddWishlist) { <span>Added to wishlist for </span> }
+                            @if (item.Action == ActivityAction.RemoveWishlist) { <span>Removed from wishlist for </span> }
+                            @item.MediaTitle in @item.Status
+                        </h5>
+                        @{ 
+                            TimeZoneInfo gmtZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+                            DateTime gmtTime = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, gmtZone);
+                        }
+                        <p class="card-text"><small class="text-muted">at @gmtTime.ToString()</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex flex-row justify-content-end">
+                    @if (item.MediaType == ActivityMediaType.Game)
+                    {
+                        <a class="btn btn-primary me-2" asp-page="/Home/Games/Id" asp-route-gameId="@item.MediaId">
+                            <i class="bi bi-box-arrow-up-right me-1"></i>
+                            View
+                        </a>
+                    }
+                </div>
+            </div>
         </div>
+    }
 </div>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Otakurin.Core.Common;
 using Otakurin.Core.Games.Tracking;
+using Otakurin.Core.Users.Activity;
 using Otakurin.Domain.Tracking;
 
 namespace Otakurin.Application.Pages.Home
@@ -15,6 +16,8 @@ namespace Otakurin.Application.Pages.Home
         public PagedListResult<GetAllGameTrackingsItemResult> RecentPagedGameTrackings { get; private set; }
             = new (new List<GetAllGameTrackingsItemResult>(), 0, 1, 1);
 
+        public GetUserActivitiesResult UserActivities { get; private set; } = new();
+        
         public IndexModel(IMediator mediator)
         {
             _mediator = mediator;
@@ -41,9 +44,14 @@ namespace Otakurin.Application.Pages.Home
                 SortByFormat = false,
                 SortByOwnership = false
             });
-
             RecentPagedGameTrackings = pagedGameTrackingsResult;
 
+            var userActivitiesResult = await _mediator.Send(new GetUserActivitiesQuery
+            {
+                UserId = Guid.Parse(userIdClaim.Value)
+            });
+            UserActivities = userActivitiesResult;
+            
             return Page();
         }
     }
